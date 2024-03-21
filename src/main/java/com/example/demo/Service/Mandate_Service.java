@@ -31,17 +31,18 @@ public class Mandate_Service {
 	public Response getImageToText(MultipartFile image) throws Exception{
 		try{
 			
+			//Input Image
 			File init_image = MultipartFileToFile.convertMultipartFileToFile(image);
-			System.out.println("Image Name : "+init_image.getName());
-			//File grayscaled_image = Grayscale.convertToGrayscale(init_image);
+//			System.out.println("Image Name : "+init_image.getName());
+			//Removing the Boxes in the Mandate Form Image
 			File boxes_removed_image = RemoveBoxes.removeBoxes(init_image);
+			//Increasing the Threshold of the Image
 			File thresholded = Threshold_Inc.threshold_inc(boxes_removed_image);
-            File resized_image = ImageResize.imageResize(thresholded);
 			
 			
 //			Map<String,String> mandate_form_details_eocr = EOCR.doEasyOCR(new FileInputStream(thresholded)); 
 			Map<String,String> mandate_form_details  = TessOCR.doTessOCR(thresholded,thresholded);
-			System.out.println("EasyOCR Results");
+			
 
 //			if(mandate_form_details_eocr!=null) {
 //			for (Map.Entry<String,String> entry : mandate_form_details_eocr.entrySet())  
@@ -51,7 +52,7 @@ public class Mandate_Service {
 			System.out.println("TessOCR Results");
 			if(mandate_form_details == null)
 			{
-				System.out.println("No details from TessOCR");
+				System.out.println("No details Recognized");
 			}
 			else {
 			for (Map.Entry<String,String> entry : mandate_form_details.entrySet())  

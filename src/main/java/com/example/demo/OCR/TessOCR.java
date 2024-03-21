@@ -61,6 +61,10 @@ public class TessOCR {
 					    accountNumberConf = word.getConfidence();
 					    System.out.println("Account number is "+accountNumber);
 					}
+					if(i.contains("cancel") && accountNumber == null)
+					{
+						accountNumber = i.replaceAll("[^0-9]", "");
+					}
 					if(i.contains("ifsc")) {
 						String IFSC_details[] = i.replaceAll("[^a-zA-Z0-9]", "").split("ifsc");
 						if(IFSC_details.length>1)
@@ -70,12 +74,16 @@ public class TessOCR {
 							for(int iterator = ifsc_split.length()-1;iterator>=0;iterator--) {
 								
 								if(Character.isDigit(ifsc_split.charAt(iterator))) {
-									IFSC = ifsc_split.substring(0,iterator+1).toUpperCase();
+									IFSC = ifsc_split.substring(0,iterator+1);
 									break;
 								}
 							}
 						}
-					    IFSCConf = word.getConfidence();			
+						if(IFSC.contains("ormicr")) {
+							IFSC = IFSC.split("ormicr")[0];
+						}
+					    IFSCConf = word.getConfidence();		
+					    IFSC = IFSC.toUpperCase();
 						System.out.println(IFSC);
 						
 //						IFSC = i.replaceAll("[^a-zA-Z0-9]", "").split("ifsc")[1];
@@ -102,14 +110,14 @@ public class TessOCR {
 				System.out.println("Inside TessOCR");
 				
 			    isSigned1 = Mandate_Sign_Detector.isSignatureBox(signDetectingImage,  signCoordinates.get(0));	
-			    isSigned2 = Mandate_Sign_Detector.isSignatureBox(signDetectingImage, signCoordinates.get(1));	
-			    isSigned3 = Mandate_Sign_Detector.isSignatureBox(signDetectingImage, signCoordinates.get(2));
-				
+//			    isSigned2 = Mandate_Sign_Detector.isSignatureBox(signDetectingImage, signCoordinates.get(1));	
+//			    isSigned3 = Mandate_Sign_Detector.isSignatureBox(signDetectingImage, signCoordinates.get(2));
+//				
                 
 				
-				mandate_form_details.put("isSigned1",isSigned1);
-				mandate_form_details.put("isSigned2",isSigned2);
-				mandate_form_details.put("isSigned3",isSigned3);
+				mandate_form_details.put("isSigned",isSigned1);
+//				mandate_form_details.put("isSigned2",isSigned2);
+//				mandate_form_details.put("isSigned3",isSigned3);
 				System.out.println("The size is "+mandate_form_details.size());
 
 				return mandate_form_details;

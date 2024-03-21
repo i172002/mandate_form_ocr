@@ -25,16 +25,25 @@ public class ImageRedaction {
             e.printStackTrace();
            
         }
-        int originalX = coordinates.x+1300;
-        int originalY = coordinates.y;
-        int originalWidth = (int)coordinates.width;
-        int originalHeight = 150;
-        for(int i = 0;i<3;i++)
-        {
-            maskRectangle(originalImage, new Rectangle(originalX,originalY,560,originalHeight));
-            signCoordinates.add(new Rectangle(originalX,originalY,560,originalHeight));
-            originalX+=760;
-        }
+        
+        int originalX = coordinates.x+1200;
+	    int originalY = coordinates.y;
+	    int originalWidth = (int)coordinates.width;
+	    int originalHeight = 150;
+        maskRectangle(originalImage, new Rectangle(originalX,originalY,2000,originalHeight));
+        signCoordinates.add(new Rectangle(originalX,originalY,2000,originalHeight));
+
+        
+//        int originalX = coordinates.x+1300;
+//        int originalY = coordinates.y;
+//        int originalWidth = (int)coordinates.width;
+//        int originalHeight = 150;
+//        for(int i = 0;i<3;i++)
+//        {
+//            maskRectangle(originalImage, new Rectangle(originalX,originalY,560,originalHeight));
+//            signCoordinates.add(new Rectangle(originalX,originalY,560,originalHeight));
+//            originalX+=760;
+//        }
         
         
 
@@ -52,16 +61,16 @@ public class ImageRedaction {
     }
 
     //apply the black rectangle in the given coordinates 
-    private static void maskRectangle(BufferedImage image, Rectangle rect) {
-        int redactX = rect.x;
-        int redactY = rect.y;
-        int redactWidth = (int) rect.getWidth();
-        int redactHeight = (int) rect.getHeight();
-        System.out.println(redactX+" "+redactY+" "+redactWidth+" "+redactHeight);
-
-        Graphics2D g = image.createGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(redactX, redactY, redactWidth, redactHeight);
-        g.dispose();
-    }
+	    private static void maskRectangle(BufferedImage image, Rectangle rect) {
+	        int redactX = rect.x;
+	        int redactY = rect.y;
+	        int redactWidth = (int) rect.getWidth();
+	        int redactHeight = (int) rect.getHeight();
+	        System.out.println(redactX+" "+redactY+" "+redactWidth+" "+redactHeight);
+	
+	        Graphics2D g = image.createGraphics();
+	        g.setColor(Color.BLACK);
+	        g.fillRect(redactX, redactY, redactWidth, redactHeight);
+	        g.dispose();
+	    }
 }
